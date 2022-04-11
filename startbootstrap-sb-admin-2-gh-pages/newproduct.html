@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Register customer</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Inventory system</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Tables
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="customers.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Customers</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="stock.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Stock</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="sales.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Sales</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="purchase.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Purchases</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Store region
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="stores.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Available stores</span></a>
+            </li>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <div class="container">
+
+                        <div class="card o-hidden border-0 shadow-lg my-5">
+                            <div class="card-body p-0">
+                                <!-- Nested Row within Card Body -->
+                                    <div class="center">
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-4">Create a new product</h1>
+                                            </div>
+                                            <hr>
+                                            <form class="user" action="stock.html">
+                                                <p class="mb-4">Product information:</p>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        <input type="text" class="form-control form-control-user" id="productCode"
+                                                               placeholder="Product code">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control form-control-user" id="name"
+                                                               placeholder="Product name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        <input type="text" class="form-control form-control-user" id="category"
+                                                               placeholder="Product category">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="number" step="any" class="form-control form-control-user" id="price"
+                                                               placeholder="Product price">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        <input type="number" step="any" class="form-control form-control-user" id="quantity"
+                                                               placeholder="Product quantity">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control form-control-user" id="vendors"
+                                                               placeholder="Product vendor">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control form-control-user" id="creationDate"
+                                                           placeholder="Creation Date">
+                                                </div>
+                                                <button onclick="sendJSON()" class="btn btn-primary btn-user btn-block">
+                                                    Add product
+                                                </button>
+                                            </form>
+                                            <hr>
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>function sendJSON(){
+
+            //console.log("Hello")
+            //let result = document.querySelector('.result');
+            let productCode = document.getElementById("productCode");
+            let name = document.getElementById("name");
+            let category = document.getElementById("category");
+            let price = document.getElementById("price");
+            let quantity = document.getElementById("quantity");
+            let creationDate = document.getElementById("creationDate");
+            let vendors = document.getElementById("vendors");
+
+            const url =  "http://localhost:8080/products";
+            var data = JSON.stringify({"productCode": productCode.value,
+                   "name": name.value,
+                   "quantity": quantity.value,
+                   "category": category.value,
+                   "price": price.value,
+                   "creationDate": creationDate.value,
+                   "vendors": vendors.value
+              })
+            fetch(url,{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: data ,
+            }).then(
+                    data => {return data.json()}
+
+            ).then(
+                  res => {console.log(data)}
+            )
+        }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Register customer</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Inventory system</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Tables
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="customers.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Customers</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="stock.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Stock</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="sales.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Sales</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="purchase.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Purchases</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Store region
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="stores.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Available stores</span></a>
+            </li>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <div class="container">
+
+                        <div class="card o-hidden border-0 shadow-lg my-5">
+                            <div class="card-body p-0">
+                                <!-- Nested Row within Card Body -->
+                                    <div class="center">
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-4">Register a new customer</h1>
+                                            </div>
+                                            <script>
+var id = window.location.href;
+id = id.replace("file:///C:/Users/Diehl/Downloads/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/newcustomer.html?","");
+document.write("Store ID: " + id + "");
+</script>
+                                            <hr>
+                                            <form class="user">
+                                                <p class="mb-4">Contact person information:</p>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        <input type="text" class="form-control form-control-user" id="FName"
+                                                               placeholder="First Name">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control form-control-user" id="LName"
+                                                               placeholder="Last Name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="email" class="form-control form-control-user" id="email"
+                                                           placeholder="Email Address">
+                                                </div>
+                                                <button onclick="sendJSON()" href="stores.html" class="btn btn-primary btn-user btn-block">
+                                                    Register customer
+                                                </button>
+                                            </form>
+                                            <hr>
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+<script>function sendJSON(){
+
+            let result = document.querySelector('.result');
+            let name = document.querySelector('#FName');
+            name += " ";
+            name += document.querySelector('#LName');
+            let email = document.querySelector('#email');
+            let storeid = window.location.href;
+            storeid = storeid.replace("file:///C:/Users/Diehl/Downloads/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/newcustomer.html?","");
+
+            // Creating a XHR object
+            let xhr = new XMLHttpRequest();
+            let url = 'http://localhost:8080/customers';
+
+            // open a connection
+            xhr.open("POST", url, true);
+
+            // Set the request header i.e. which type of content you are sending
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Create a state change callback
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+
+                    // Print received data from server
+                    result.innerHTML = this.responseText;
+
+                }
+            };
+
+            // Converting JSON data to string
+            var data = JSON.stringify({"id": storeid.value, "name": name.value, "email": email.value });
+
+            // Sending data with the request
+            xhr.send(data);
+        }
+</script>
+    <!-- Bootstrap core JavaScript-->
+    <!--<script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+
+    <!-- Core plugin JavaScript-->
+    <!--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
+
+    <!-- Custom scripts for all pages-->
+    <!--<script src="js/sb-admin-2.min.js"></script>-->
+
+    <!-- Page level plugins -->
+    <!--<script src="vendor/datatables/jquery.dataTables.min.js"></script>-->
+    <!--<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
+
+    <!-- Page level custom scripts -->
+    <!--<script src="js/demo/datatables-demo.js"></script>-->
+
+</body>
+
+</html>
