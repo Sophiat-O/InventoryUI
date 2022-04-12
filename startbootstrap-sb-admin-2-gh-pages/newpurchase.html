@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
 <head>
 
@@ -9,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Register customer</title>
+    <title>Make Purchase</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -119,17 +120,28 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">Make a new purchase</h1>
                                             </div>
-                                                <form class="user" action="purchase.html">
+                                                <form class="user" onsubmit="return false">
                                                     <p class="mb-4">Purchase information:</p>
                                                     <hr>
                                                     <div class="form-group row">
                                                         <div class="col-sm-6 mb-3 mb-sm-0">
-                                                            Product code: <input type="text" class="form-control form-control-user" id="id"
-                                                            disabled>
+                                                            <div class="input-group mb-3">
+                                                             <input type="text" class="form-control form-control-user" id="id" placeholder="Product code:">
+                                                            <div class="input-group-append">
+                                                            <button onclick="productJSON()" class="btn btn-primary btn-user btn-block">
+                                                                Search
+                                                            </button>
+                                                            </div>
                                                         </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            <form class="user" action="purchase.html">
+                                                        <div class="form-group row">
                                                         <div class="col-sm-6">
                                                             Product name: <input type="text" step="any" class="form-control form-control-user" id="name"
                                                             disabled>
+                                                        </div>
                                                         </div>
                                                     <div class="form-group row">
                                                         <div class="col-sm-6 mb-3 mb-sm-0">
@@ -170,7 +182,8 @@
                                                     <button onclick="sendJSON()" class="btn btn-primary btn-user btn-block">
                                                         Add purchase
                                                     </button>
-                                                </form>
+
+
                                             </form>
                                             <hr>
                                         </div>
@@ -223,36 +236,36 @@
         </script>
         
     <script>function sendJSON(){
-        //let productCode = document.getElementById("id").value;
-        //let name = document.getElementById("name");
-        //let category = document.getElementById("category");
-        //let price = document.getElementById("price");
-        //let fquantity = document.getElementById("qty").value + document.getElementById("quantity").value;
-        //let creationDate = document.getElementById("creationDate");
-        //let vendors = document.getElementById("vendor");
+        let productCode = document.getElementById("id").value;
+        let name = document.getElementById("name");
+        let category = document.getElementById("category");
+        let price = document.getElementById("price");
+        let fquantity = document.getElementById("qty").value + document.getElementById("quantity").value;
+        let creationDate = document.getElementById("creationDate");
+        let vendors = document.getElementById("vendor");
 
-        //const url =  "http://localhost:8080/products/" + productCode;
-        //var prodData = JSON.stringify({"productCode": productCode.value,
-               //"name": name.value,
-               //"category": category.value,
-               //"price": price.value,
-               //"quantity": fquantity.value,
-               //"creationDate": creationDate.value,
-               //"vendors": vendors.value
-          //})
-        //fetch(url,{
-        //method: 'PUT',
-        //headers: {
-          //'Accept': 'application/json',
-          //'Content-Type': 'application/json'
-        //},
-        //body: prodData ,
-        //}).then(
+        const url =  "http://localhost:8080/products/" + productCode;
+        var prodData = JSON.stringify({"productCode": productCode,
+               "name": name.value,
+               "quantity": fquantity,
+               "category": category.value,
+               "price": price.value,
+               "creationDate": creationDate.value,
+               "vendors": vendors.value
+          })
+        fetch(url,{
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: prodData ,
+        }).then(
                 //prodData => {return prodData.json()}
 
-        //).then(
+        ).then(
               //res => {console.log(prodData)}
-        //)
+        )
 
             let purchaseId = document.getElementById("purchase");
             let product = document.getElementById("id");
@@ -261,13 +274,13 @@
             let purchasePrice = parseInt(document.getElementById("price").value) * purchaseQuantity;
 
 
-            const url =  'http://localhost:8080/purchases';
+            const purchaseUrl =  'http://localhost:8080/purchases';
             var data = JSON.stringify({"id": parseInt(purchaseId.value),
                    "product": parseInt(product.value),
                    "vendor": parseInt(vendor.value),
                    "quantity": purchaseQuantity,
                    "price": purchasePrice })
-            fetch(url,{
+            fetch(purchaseUrl,{
             method: 'POST',
             headers: {
               'Accept': 'application/json',
