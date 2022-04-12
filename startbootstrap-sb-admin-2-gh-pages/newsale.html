@@ -189,9 +189,10 @@
                                                  console.log(data.length);
                                                         for (var i = 0; i < data.length; i++) {
                                                         var obj = data[i];
-                                                        var customerID = window.location.href;
-                                                        customerID = id.replace("/Users/sophie/InventoryUI/startbootstrap-sb-admin-2-gh-pages/newsale.html?","");
-                                                        var link = "makesale.html?"+ customerID + "?" + obj.productCode +"";
+                                                        var id = window.location.href;
+                                                const customerID = id.split('?');
+                                                        
+                                                        var link = "makesale.html?"+ customerID[1] + "?" + obj.productCode +"";
                                                         console.log(data[i].name);
                                                             tab +=  `<tr>
                                                         <td>${obj.name}</td>
