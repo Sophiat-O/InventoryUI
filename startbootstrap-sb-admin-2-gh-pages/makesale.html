@@ -190,8 +190,10 @@
     <script>
         var id = window.location.href;
         const info = id.split('?');
-        document.getElementById("customerID").innerHTML = info[1]; 
-        document.getElementById("productCode").innerHTML = info[2]; 
+        document.getElementById("customerID").setAttribute('value',info[1])
+        document.getElementById("productCode").setAttribute('value',info[2])
+        //document.getElementById("customerID").innerHTML = info[1]; 
+        //document.getElementById("productCode").innerHTML = info[2]; 
         
         const options = {
                                                         method: 'GET'
