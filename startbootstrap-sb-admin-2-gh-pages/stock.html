@@ -266,7 +266,7 @@
             }
             function deleteprd(id) {
             if (confirm("Confirm product deletion?")) {
-                fetch('https://example.com/delete-item/' + id, {
+                fetch('http://localhost:8080/products/' + id, {
   method: 'DELETE',
 })
 .then(res => res.text()) // or res.json()
