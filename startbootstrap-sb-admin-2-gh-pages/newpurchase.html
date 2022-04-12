@@ -119,37 +119,43 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">Make a new purchase</h1>
                                             </div>
-                                            <script>
-var id = window.location.href;
-id = id.replace("file:///C:/Users/Diehl/Downloads/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/newcustomer.html?","");
-document.write("Store ID: " + id + "");
-</script>
+                                            Product code: <span id="id"></span>
                                             <hr>
                                             <form class="user" action="purchase.html">
                                                 <p class="mb-4">Purchase information:</p>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="text" class="form-control form-control-user" id="id"
-                                                               placeholder="Purchase ID">
+                                                        Product name: <span id="name"></span>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <input type="text" class="form-control form-control-user" id="product"
-                                                               placeholder="Product ID">
+                                                        Product category: <span id="category"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="text" class="form-control form-control-user" id="vendor"
-                                                               placeholder="Vendor ID">
+                                                        Vendor ID: <span id="vendor"></span>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        Current quantity: <span id="qty"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        Creation date: <span id="creationDate"></span>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        Unit price: <span id="price"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        <input type="text" class="form-control form-control-user" id="purchase"
+                                                               placeholder="Purchase ID">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <input type="number" step="any" class="form-control form-control-user" id="quantity"
                                                                placeholder="Quantity">
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="number" step="any" class="form-control form-control-user" id="price"
-                                                           placeholder="Price">
                                                 </div>
                                                 <button onclick="sendJSON()" class="btn btn-primary btn-user btn-block">
                                                     Add purchase
@@ -158,7 +164,6 @@ document.write("Store ID: " + id + "");
                                             <hr>
                                         </div>
                                     </div>
-
                             </div>
                         </div>
                     </div>
@@ -166,23 +171,88 @@ document.write("Store ID: " + id + "");
             </div>
         </div>
     </div>
+    <script>
+        var id = window.location.href;
+        id = id.replace("file:///C:/Users/Diehl/Downloads/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/newcustomer.html?","");
+        document.write("Product ID: " + id + "");
+        document.getElementById("id").innerHTML = id; 
+        
+        const options = {
+                                                        method: 'GET'
+                                                    };
+                                                    const api_url =
+                                                          'http://localhost:8080/products'+ id + "";
+                                                          //const response = await fetch(url, options);
+        
+                                                        // Storing data in form of JSON
+                                                        //var data = await response.json();
+                                                        var data = {"productCode": 20,
+                           "name": "name",
+                           "quantity": 50,
+                           "category": "category.value",
+                           "price": 10,
+                           "creationDate": "creationDate.value",
+                           "vendors": "somevendor"
+                      }
+                                                        console.log(data);
+                                                        document.getElementById("price").innerHTML = data.price; 
+                                                        document.getElementById("vendor").innerHTML = data.vendors; 
+                                                        document.getElementById("qty").innerHTML = data.quantity; 
+                                                        document.getElementById("name").innerHTML = data.name; 
+                                                        document.getElementById("category").innerHTML = data.category; 
+                                                        document.getElementById("creationDate").innerHTML = data.creationDate; 
+        
+                                                        
+        
+        </script>
+        
     <script>function sendJSON(){
+        let productCode = document.getElementById("productCode");
+        let name = document.getElementById("name");
+        let category = document.getElementById("category");
+        let price = document.getElementById("price");
+        let fquantity = document.getElementById("qty").value + document.getElementById("quantity").value;
+        let creationDate = document.getElementById("creationDate");
+        let vendors = document.getElementById("vendor");
+
+        const url =  "http://localhost:8080/products" + productCode + "";
+        var data = JSON.stringify({"productCode": productCode.value,
+               "name": name.value,
+               "quantity": fquantity,
+               "category": category.value,
+               "price": price.value,
+               "creationDate": creationDate.value,
+               "vendors": vendors.value
+          })
+        fetch(url,{
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: data ,
+        }).then(
+                data => {return data.json()}
+
+        ).then(
+              res => {console.log(data)}
+        )
 
             let id = document.getElementById("id");
             let product = document.getElementById("product");
             let vendor = document.getElementById("vendor");
-            let quantity = document.getElementById("quantity");
-            let price = document.getElementById("price");
+            let purchaseQuantity = document.getElementById("quantity").value;
+            let purchasePrice = document.getElementById("price").value * purchaseQuantity;
 
 
-            const url =  "http://localhost:8080/purchases";
+            const purchaseurl =  "http://localhost:8080/purchases";
             var data = JSON.stringify({"id": id.value,
                    "product": product.value,
                    "vendor": vendor.value,
-                   "quantity": quantity.value,
-                   "price": price.value
+                   "quantity": purchaseQuantity,
+                   "price": purchasePrice
               })
-            fetch(url,{
+            fetch(purchaseurl,{
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -200,24 +270,7 @@ document.write("Store ID: " + id + "");
 </body>
 
 </html>
-    <!-- Bootstrap core JavaScript-->
-    <!--<script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
 
-    <!-- Core plugin JavaScript-->
-    <!--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
-
-    <!-- Custom scripts for all pages-->
-    <!--<script src="js/sb-admin-2.min.js"></script>-->
-
-    <!-- Page level plugins -->
-    <!--<script src="vendor/datatables/jquery.dataTables.min.js"></script>-->
-    <!--<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
-
-    <!-- Page level custom scripts -->
-    <!--<script src="js/demo/datatables-demo.js"></script>
-    <body onload="start()">
-    </body>
 </body>
 
 </html>

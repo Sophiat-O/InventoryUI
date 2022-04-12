@@ -177,6 +177,7 @@
                                          console.log(data.length);
                                                 for (var i = 0; i < data.length; i++) {
                                                 var obj = data[i];
+                                                var link = "newpurchase.html?"+ obj.productCode +"";
                                                 console.log(data[i].name);
                                                     tab +=  `<tr>
                                                 <td>${obj.name}</td>
@@ -190,7 +191,7 @@
                                                                placeholder="Enter quantity">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <button onclick="restock('${obj}')" class="btn btn-primary btn-user">Purchase</button>
+                                                        <a href= ${link} class="btn btn-primary btn-user">Purchase</a>
                                                     </div> </div></td>
                                                     <td>
                                                         <button onclick="deleteprd(${obj.productCode})" class="btn btn-primary btn-user">Delete</button>
@@ -210,59 +211,7 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
-            <script>function restock(prod) {
-            var txt;
-            var qty = document.getElementById("qty").value;
-            var tot = qty*prod.price;
-            if (confirm("Total is" + tot + " Confirm order?")) {
-                let quantity = prod.quantity+qty;
-
-                const url =  "http://localhost:8080/products/"+prod.productCode+"";
-                var data = JSON.stringify({"productCode": prod.productCode,
-                    "name": prod.name,
-                    "quantity": quantity,
-                    "category": prod.category,
-                    "price": prod.price,
-                    "creationDate": prod.creationDate,
-                    "vendors": prod.vendors
-                })
-                fetch(url,{
-                method: 'PUT',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-                body: data ,
-                }).then(
-                        data => {return data.json()}
-
-                ).then(
-                    res => {console.log(data)}
-                )
-
-                let purchaseID =  prod.productCode + qty;
-            const purchaseurl =  "http://localhost:8080/purchases";
-            var data = JSON.stringify({"id": purchaseID,
-                   "product": prod.productCode,
-                   "vendor": prod.vendors,
-                   "quantity": qty,
-                   "price": tot
-              })
-            fetch(purchaseurl,{
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: data ,
-            }).then(
-                    data => {return data.json()}
-
-            ).then(
-                  res => {console.log(data)}
-            )
-            }
-            }
+            <script>
             function deleteprd(id) {
             if (confirm("Confirm product deletion?")) {
                 fetch('http://localhost:8080/products/' + id, {
