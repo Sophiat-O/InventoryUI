@@ -118,7 +118,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h5 class="m-0 font-weight-bold text-primary" style="text-align: left; width:49%; display: inline-block;">Stock</h5>
-                            <a href="newproduct.html" onclick="myFunction(${obj.price})" class="btn btn-primary" style="text-align: right; float:right; width:20%; display: inline-block;">Add new product</a>
+                            <a href="newproduct.html" class="btn btn-primary" style="text-align: right; float:right; width:20%; display: inline-block;">Add new product</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -178,7 +178,6 @@
                                                 for (var i = 0; i < data.length; i++) {
                                                 var obj = data[i];
                                                 console.log(data[i].name);
-                                                var link = "newpurchase.html?"+ obj.productCode +"";
                                                     tab +=  `<tr>
                                                 <td>${obj.name}</td>
                                                 <td>${obj.category} </td>
@@ -191,10 +190,10 @@
                                                                placeholder="Enter quantity">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <button onclick="restock(${obj.price})" class="btn btn-primary btn-user">Purchase</button>
+                                                        <button onclick="restock(${obj.price}, ${obj.productCode}, ${obj.name}, ${obj.category}, ${obj.quantity}, ${obj.creationDate}, ${obj.vendors})" class="btn btn-primary btn-user">Purchase</button>
                                                     </div> </div></td>
                                                     <td>
-                                                        <button onclick="deleteprd()" class="btn btn-primary btn-user">Delete product</button>
+                                                        <button onclick="deleteprd(${obj.productCode})" class="btn btn-primary btn-user">Delete</button>
                                                     </td>
                                             </tr>`
                                                 }
@@ -212,21 +211,66 @@
 
                 </div>
                 <!-- /.container-fluid -->
-            <script>function restock(price) {
+            <script>function restock(price, id, name, category, iniqty, creationDate, vendor) {
             var txt;
             var qty = document.getElementById("qty").value;
             var tot = qty*price
             if (confirm("Total is" + tot + " Confirm order?")) {
-            txt = "You pressed OK!";
-            } else {
-            txt = "You pressed Cancel!";
+                let quantity = iniqty+qty;
+
+                const url =  "http://localhost:8080/products/"+id+"";
+                var data = JSON.stringify({"productCode": id.value,
+                    "name": name.value,
+                    "quantity": quantity.value,
+                    "category": category.value,
+                    "price": price.value,
+                    "creationDate": creationDate.value,
+                    "vendors": vendor.value
+                })
+                fetch(url,{
+                method: 'PUT',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: data ,
+                }).then(
+                        data => {return data.json()}
+
+                ).then(
+                    res => {console.log(data)}
+                )
+
+                let purchaseID = id + qty;
+            const purchaseurl =  "http://localhost:8080/purchases";
+            var data = JSON.stringify({"id": purchaseID.value,
+                   "product": id.value,
+                   "vendor": vendor.value,
+                   "quantity": qty.value,
+                   "price": tot.value
+              })
+            fetch(purchaseurl,{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: data ,
+            }).then(
+                    data => {return data.json()}
+
+            ).then(
+                  res => {console.log(data)}
+            )
             }
             }
-            function deleteprd() {
+            function deleteprd(id) {
             if (confirm("Confirm product deletion?")) {
-            txt = "You pressed OK!";
-            } else {
-            txt = "You pressed Cancel!";
+                fetch('https://example.com/delete-item/' + id, {
+  method: 'DELETE',
+})
+.then(res => res.text()) // or res.json()
+.then(res => console.log(res))
             }
             }
             </script>
@@ -274,22 +318,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <!--<script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
-
-    <!-- Core plugin JavaScript-->
-    <!--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
-
-    <!-- Custom scripts for all pages-->
-    <!--<script src="js/sb-admin-2.min.js"></script>-->
-
-    <!-- Page level plugins -->
-    <!--<script src="vendor/datatables/jquery.dataTables.min.js"></script>-->
-    <!--<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
-
-    <!-- Page level custom scripts -->
-    <!--<script src="js/demo/datatables-demo.js"></script>-->
     <body onload="start()">
     </body>
 </body>
