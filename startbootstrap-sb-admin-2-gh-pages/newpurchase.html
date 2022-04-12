@@ -124,9 +124,8 @@
                                             <form class="user" action="purchase.html">
                                                 <p class="mb-4">Purchase information:</p>
                                                 <div class="form-group row">
-                                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        Product name: <span id="name"></span>
-                                                    </div>
+                                                    <input type="text" class="form-control form-control-user" id="name"
+                                                               disabled>
                                                     <div class="col-sm-6">
                                                         Product category: <span id="category"></span>
                                                     </div>
@@ -186,7 +185,7 @@
                                                         // Storing data in form of JSON
                                                         //var data = await response.json();
                                                         var data = {"productCode": 20,
-                           "name": "name",
+                           "name": "hisname",
                            "quantity": 50,
                            "category": "category.value",
                            "price": 10,
@@ -198,6 +197,7 @@
                                                         document.getElementById("vendor").innerHTML = data.vendors; 
                                                         document.getElementById("qty").innerHTML = data.quantity; 
                                                         document.getElementById("name").innerHTML = data.name; 
+                                                        document.getElementById("name").setAttribute('value',data.name);
                                                         document.getElementById("category").innerHTML = data.category; 
                                                         document.getElementById("creationDate").innerHTML = data.creationDate; 
         
