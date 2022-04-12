@@ -119,10 +119,11 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">Register a new customer</h1>
                                             </div>
+                                            Store ID: <span id="storeID"></span>
                                             <script>
-var id = window.location.href;
-id= id.split('?')[1];
-document.write("Store ID: " + id + "");
+            var id = window.location.href;
+            const info = id.split('?');
+            document.getElementById("storeID").innerHTML = info[1]; 
 </script>
                                             <hr>
                                             <form class="user">
@@ -159,8 +160,7 @@ document.write("Store ID: " + id + "");
             name += " ";
             name += document.querySelector('#LName');
             let email = document.querySelector('#email');
-            let storeid = window.location.href;
-            storeid = storeid.split('?')[1];
+            let storeid = document.getElementById("storeID");
 
             // Creating a XHR object
             let xhr = new XMLHttpRequest();
