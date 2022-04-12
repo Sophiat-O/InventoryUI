@@ -196,9 +196,7 @@
 
                             async function getapi(url) {
                                 // Storing response
-                                const response = await fetch(url, options,{
-                                mode:'no-cors'
-                                });
+                                const response = await fetch(url, options);
 
                                 // Storing data in form of JSON
                                 var data = await response.json();
@@ -224,52 +222,51 @@
         </script>
         
     <script>function sendJSON(){
-        let productCode = document.getElementById("productCode");
-        let name = document.getElementById("name");
-        let category = document.getElementById("category");
-        let price = document.getElementById("price");
-        let fquantity = document.getElementById("qty").value + document.getElementById("quantity").value;
-        let creationDate = document.getElementById("creationDate");
-        let vendors = document.getElementById("vendor");
+        //let productCode = document.getElementById("id").value;
+        //let name = document.getElementById("name");
+        //let category = document.getElementById("category");
+        //let price = document.getElementById("price");
+        //let fquantity = document.getElementById("qty").value + document.getElementById("quantity").value;
+        //let creationDate = document.getElementById("creationDate");
+        //let vendors = document.getElementById("vendor");
 
-        const url =  "http://localhost:8080/products" + productCode + "";
-        var data = JSON.stringify({"productCode": productCode.value,
-               "name": name.value,
-               "category": category.value,
-               "price": price.value,
-               "quantity": fquantity.value,
-               "creationDate": creationDate.value,
-               "vendors": vendors.value
-          })
-        fetch(url,{
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: data ,
-        }).then(
-                data => {return data.json()}
+        //const url =  "http://localhost:8080/products/" + productCode;
+        //var prodData = JSON.stringify({"productCode": productCode.value,
+               //"name": name.value,
+               //"category": category.value,
+               //"price": price.value,
+               //"quantity": fquantity.value,
+               //"creationDate": creationDate.value,
+               //"vendors": vendors.value
+          //})
+        //fetch(url,{
+        //method: 'PUT',
+        //headers: {
+          //'Accept': 'application/json',
+          //'Content-Type': 'application/json'
+        //},
+        //body: prodData ,
+        //}).then(
+                //prodData => {return prodData.json()}
 
-        ).then(
-              res => {console.log(data)}
-        )
+        //).then(
+              //res => {console.log(prodData)}
+        //)
 
-            let id = document.getElementById("purchase");
-            let product = document.getElementById("productCode");
+            let purchaseId = document.getElementById("purchase");
+            let product = document.getElementById("id");
             let vendor = document.getElementById("vendor");
-            let purchaseQuantity = document.getElementById("quantity").value;
-            let purchasePrice = document.getElementById("price").value * purchaseQuantity;
+            let purchaseQuantity = parseInt(document.getElementById("quantity").value);
+            let purchasePrice = parseInt(document.getElementById("price").value) * purchaseQuantity;
 
 
-            const purchaseurl =  "http://localhost:8080/purchases";
-            var data = JSON.stringify({"id": id.value,
-                   "product": product.value,
-                   "vendor": vendor.value,
+            const url =  'http://localhost:8080/purchases';
+            var data = JSON.stringify({"id": parseInt(purchaseId.value),
+                   "product": parseInt(product.value),
+                   "vendor": parseInt(vendor.value),
                    "quantity": purchaseQuantity,
-                   "price": purchasePrice
-              })
-            fetch(purchaseurl,{
+                   "price": purchasePrice })
+            fetch(url,{
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -284,9 +281,6 @@
             )
         }
 </script>
-</body>
-
-</html>
 
 </body>
 
