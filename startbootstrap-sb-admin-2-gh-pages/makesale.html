@@ -121,10 +121,12 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    Customer ID: <span id="customerID"></span>
+                                                    Customer ID: <input type="number" class="form-control form-control-user" id="customerID"
+                                                            disabled>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    Product code: <span id="productCode"></span>
+                                                    Product code: <input type="number" class="form-control form-control-user" id="productCode"
+                                                            disabled>
                                                 </div>
                                             </div>
                                             <hr>
@@ -132,26 +134,33 @@
                                                 <p class="mb-4">Sale information:</p>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        Product name: <span id="name"></span>
+                                                        
+                                                        Product name: <input type="text" class="form-control form-control-user" id="name"
+                                                        disabled>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        Product category: <span id="category"></span>
+                                                        Product category: <input type="text" class="form-control form-control-user" id="category"
+                                                        disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        Vendor ID: <span id="vendor"></span>
+                                                        Vendor ID: <input type="number" class="form-control form-control-user" id="vendor"
+                                                        disabled>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        Current quantity: <span id="qty"></span>
+                                                        Current quantity: <input type="number" class="form-control form-control-user" id="qty"
+                                                        disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
-                                                        Creation date: <span id="creationDate"></span>
+                                                        Creation date: <input type="text" class="form-control form-control-user" id="creationDate"
+                                                        disabled>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        Unit price: <span id="price"></span>
+                                                        Unit price: <input type="number" class="form-control form-control-user" id="price"
+                                                        disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -202,15 +211,13 @@
                            "vendors": "somevendor"
                       }
                                                         console.log(data);
-                                                        document.getElementById("price").innerHTML = data.price; 
-                                                        document.getElementById("vendor").innerHTML = data.vendors; 
-                                                        document.getElementById("qty").innerHTML = data.quantity; 
-                                                        document.getElementById("name").innerHTML = data.name; 
-                                                        document.getElementById("category").innerHTML = data.category; 
-                                                        document.getElementById("creationDate").innerHTML = data.creationDate; 
-        
+                                                        document.getElementById("price").setAttribute('value',data.price);
+                                                        document.getElementById("vendor").setAttribute('value',data.vendors);
+                                                        document.getElementById("qty").setAttribute('value',data.quantity);
+                                                        document.getElementById("name").setAttribute('value',data.name);
+                                                        document.getElementById("category").setAttribute('value',data.category);
+                                                        document.getElementById("creationDate").setAttribute('value',data.creationDate);     
                                                         
-        
         </script>
         
     <script>function sendJSON(){
