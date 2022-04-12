@@ -119,13 +119,26 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">Update customer information</h1>
                                             </div>
-                                            <script>
+                                            <!--<script>
 var id = window.location.href;
 id = id.split('?')[1];
 document.write("Store ID: " + id + "");
-</script>
+</script>-->                               <form class="user" onsubmit="return false">
+                                            <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control form-control-user" id="id" placeholder="Store ID:">
+                                                    <div class="input-group-append">
+                                                        <button onclick="cusJSON()" class="btn btn-primary btn-user btn-block">
+                                                            Search
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            </form>
                                             <hr>
-                                            <form class="user">
+                                            <form class="user" onsubmit="return false">
                                                 <p class="mb-4">Contact person information:</p>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -141,7 +154,11 @@ document.write("Store ID: " + id + "");
                                                     <input type="email" class="form-control form-control-user" id="email"
                                                            placeholder="Email Address">
                                                 </div>
-                                                <button onclick="sendJSON()" href="stores.html" class="btn btn-primary btn-user btn-block">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control form-control-user" id="creationDate"
+                                                           placeholder="Creation Date">
+                                                </div>
+                                                <button onclick="sendJSON()"  class="btn btn-primary btn-user btn-block">
                                                     Update customer
                                                 </button>
                                             </form>
@@ -156,43 +173,74 @@ document.write("Store ID: " + id + "");
             </div>
         </div>
     </div>
-<script>function sendJSON(){
+<script>function cusJSON(){
+        //var id = window.location.href;
+        //const info = id.split('?');
+        //document.getElementById("id").innerHTML = info[1];
+        var id = document.getElementById("id").value;
 
-            let result = document.querySelector('.result');
-            let name = document.querySelector('#FName');
-            name += " ";
-            name += document.querySelector('#LName');
-            let email = document.querySelector('#email');
-            let storeid = window.location.href;
-            const info = storeid.split('?');
-            storeid = info[1];
+        const options = {
+                            method: 'GET'
+                        };
+                        const api_url =
+                              'http://localhost:8080/customers/'+ id;
 
-            // Creating a XHR object
-            let xhr = new XMLHttpRequest();
-            let url = 'http://localhost:8080/customers'+ storeid.value + '';
+                            async function getapi(url) {
+                                // Storing response
+                                const response = await fetch(url, options);
 
-            // open a connection
-            xhr.open("PUT", url, true);
+                                // Storing data in form of JSON
+                                var data = await response.json();
 
-            // Set the request header i.e. which type of content you are sending
-            xhr.setRequestHeader("Content-Type", "application/json");
+                                show(data);
+                            }
+                            // Calling that async function
+                            getapi(api_url);
 
-            // Create a state change callback
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
+                            function show(data) {
 
-                    // Print received data from server
-                    result.innerHTML = this.responseText;
+                                console.log(data);
+                                var name = data.name;
+                                const myArray = name.split(" ");
+                                console.log(myArray);
+                                document.getElementById("FName").setAttribute('value',myArray[0]);
+                                document.getElementById("LName").setAttribute('value',myArray[1]);
+                                document.getElementById("email").setAttribute('value',data.email);
+                                document.getElementById("creationDate").setAttribute('value',data.creationDate);
 
-                }
-            };
+                            }
 
-            // Converting JSON data to string
-            var data = JSON.stringify({"id": storeid.value, "name": name.value, "email": email.value });
 
-            // Sending data with the request
-            xhr.send(data);
         }
+        </script>
+
+    <script>function sendJSON(){
+        var id = document.getElementById("id").value;
+        let name = document.getElementById("FName").value + " " + document.getElementById("LName").value;
+        let email = document.getElementById("email").value;
+        let creationDate = document.getElementById("creationDate").value;
+
+
+        const url =  "http://localhost:8080/customers/" + id;
+        var prodData = JSON.stringify({"id": id,
+               "name": name,
+               "email": email,
+               "creationDate":creationDate
+          })
+        fetch(url,{
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: prodData ,
+        }).then(
+                //prodData => {return prodData.json()}
+
+        ).then(
+              //res => {console.log(prodData)}
+        )
+    }
 </script>
 
 

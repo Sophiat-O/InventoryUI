@@ -121,16 +121,29 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
+
                                                     Customer ID: <input type="number" class="form-control form-control-user" id="customerID"
                                                             disabled>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    Product code: <input type="number" class="form-control form-control-user" id="productCode"
-                                                            disabled>
+
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    Product code:
+                                                    <div class="input-group mb-3">
+                                                     <input type="number" class="form-control form-control-user" id="productCode"
+                                                            disabled>
+                                                        <div class="input-group-append">
+                                                            <button onclick="saleJSON()" class="btn btn-primary btn-user btn-block">
+                                                                Search
+                                                            </button>
+                                                        </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                                </div>
                                             <hr>
-                                            <form class="user" action="purchase.html">
+                                            <form class="user" action="sales.html">
                                                 <p class="mb-4">Sale information:</p>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -155,8 +168,8 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
-                                                        Creation date: <input type="text" class="form-control form-control-user" id="creationDate"
-                                                        disabled>
+                                                        Creation date: <input type="date" class="form-control form-control-user" id="creationDate"
+                                                        >
                                                     </div>
                                                     <div class="col-sm-6">
                                                         Unit price: <input type="number" class="form-control form-control-user" id="price"
@@ -174,7 +187,7 @@
                                                     </div>
                                                 </div>
                                                 <button onclick="sendJSON()" class="btn btn-primary btn-user btn-block">
-                                                    Add purchase
+                                                    Add Sale
                                                 </button>
                                             </form>
                                             <hr>
@@ -188,71 +201,54 @@
         </div>
     </div>
     <script>
+
         var id = window.location.href;
         const info = id.split('?');
         document.getElementById("customerID").setAttribute('value',info[1])
         document.getElementById("productCode").setAttribute('value',info[2])
+        var productCode = info[2];
         //document.getElementById("customerID").innerHTML = info[1]; 
         //document.getElementById("productCode").innerHTML = info[2]; 
-        
-        const options = {
-                                                        method: 'GET'
-                                                    };
-                                                    const api_url =
-                                                          'http://localhost:8080/products'+ id + "";
-                                                          //const response = await fetch(url, options);
-        
-                                                        // Storing data in form of JSON
-                                                        //var data = await response.json();
-                                                        var data = {"productCode": 20,
-                           "name": "name",
-                           "quantity": 50,
-                           "category": "category.value",
-                           "price": 10,
-                           "creationDate": "creationDate.value",
-                           "vendors": "somevendor"
-                      }
-                                                        console.log(data);
-                                                        document.getElementById("price").setAttribute('value',data.price);
-                                                        document.getElementById("vendor").setAttribute('value',data.vendors);
-                                                        document.getElementById("qty").setAttribute('value',data.quantity);
-                                                        document.getElementById("name").setAttribute('value',data.name);
-                                                        document.getElementById("category").setAttribute('value',data.category);
-                                                        document.getElementById("creationDate").setAttribute('value',data.creationDate);     
-                                                        
-        </script>
+</script>
+    <script>
+    function saleJSON(){
+    const options = {
+                            method: 'GET'
+                        };
+                        const api_url =
+                              'http://localhost:8080/products/'+ productCode;
+                              //const response = await fetch(url, options);
+
+                            // Storing data in form of JSON
+                            //var data = await response.json();
+
+                             async function getapi(url) {
+                                // Storing response
+                                const response = await fetch(url, options);
+
+                                // Storing data in form of JSON
+                                var data = await response.json();
+
+                                show(data);
+                            }
+                            // Calling that async function
+                            getapi(api_url);
+
+                            function show(data) {
+
+                            console.log(data);
+                            document.getElementById("price").setAttribute('value',data.price);
+                            document.getElementById("vendor").setAttribute('value',data.vendors);
+                            document.getElementById("qty").setAttribute('value',data.quantity);
+                            document.getElementById("name").setAttribute('value',data.name);
+                            document.getElementById("category").setAttribute('value',data.category);
+                            document.getElementById("creationDate").setAttribute('value',data.creationDate);
+                        }
+
+    }
+</script>
         
     <script>function sendJSON(){
-        let productCode = document.getElementById("productCode");
-        let name = document.getElementById("name");
-        let category = document.getElementById("category");
-        let price = document.getElementById("price");
-        let fquantity = document.getElementById("qty").value - document.getElementById("quantity").value;
-        let creationDate = document.getElementById("creationDate");
-        let vendors = document.getElementById("vendor");
-
-        const url =  "http://localhost:8080/products" + productCode + "";
-        var data = JSON.stringify({"productCode": productCode.value,
-               "name": name.value,
-               "quantity": fquantity,
-               "category": category.value,
-               "price": price.value,
-               "creationDate": creationDate.value,
-               "vendors": vendors.value
-          })
-        fetch(url,{
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: data ,
-        }).then(
-                data => {return data.json()}
-
-        ).then(
-              res => {console.log(data)}
-        )
 
             let id = document.getElementById("sale");
             let product = document.getElementById("productCode");
@@ -260,18 +256,18 @@
             let saleQuantity = document.getElementById("quantity").value;
             let purchasePrice = document.getElementById("price").value * saleQuantity;
             var today = new Date();
-            var saleDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var saleDate = document.getElementById("creationDate").value;
 
 
-            const purchaseurl =  "http://localhost:8080/sales";
+            const saleurl =  'http://localhost:8080/sales';
             var data = JSON.stringify({"id": id.value,
                    "product": product.value,
                    "customer": customer.value,
-                   "quantity": purchaseQuantity,
+                   "quantity": saleQuantity,
                    "creationDate": saleDate,
                    "price": purchasePrice
               })
-            fetch(purchaseurl,{
+            fetch(saleurl,{
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -286,10 +282,6 @@
             )
         }
 </script>
-</body>
-
-</html>
-
 </body>
 
 </html>
