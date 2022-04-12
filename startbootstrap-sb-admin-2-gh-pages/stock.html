@@ -190,7 +190,7 @@
                                                                placeholder="Enter quantity">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <button onclick="restock(${obj.price}, ${obj.productCode}, ${obj.name}, ${obj.category}, ${obj.quantity}, ${obj.creationDate}, ${obj.vendors})" class="btn btn-primary btn-user">Purchase</button>
+                                                        <button onclick="restock('${obj}')" class="btn btn-primary btn-user">Purchase</button>
                                                     </div> </div></td>
                                                     <td>
                                                         <button onclick="deleteprd(${obj.productCode})" class="btn btn-primary btn-user">Delete</button>
@@ -208,24 +208,23 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
-            <script>function restock(price, id, name, category, iniqty, creationDate, vendor) {
+            <script>function restock(prod) {
             var txt;
             var qty = document.getElementById("qty").value;
-            var tot = qty*price
+            var tot = qty*prod.price;
             if (confirm("Total is" + tot + " Confirm order?")) {
-                let quantity = iniqty+qty;
+                let quantity = prod.quantity+qty;
 
-                const url =  "http://localhost:8080/products/"+id+"";
-                var data = JSON.stringify({"productCode": id.value,
-                    "name": name.value,
-                    "quantity": quantity.value,
-                    "category": category.value,
-                    "price": price.value,
-                    "creationDate": creationDate.value,
-                    "vendors": vendor.value
+                const url =  "http://localhost:8080/products/"+prod.productCode+"";
+                var data = JSON.stringify({"productCode": prod.productCode,
+                    "name": prod.name,
+                    "quantity": quantity,
+                    "category": prod.category,
+                    "price": prod.price,
+                    "creationDate": prod.creationDate,
+                    "vendors": prod.vendors
                 })
                 fetch(url,{
                 method: 'PUT',
@@ -241,13 +240,13 @@
                     res => {console.log(data)}
                 )
 
-                let purchaseID = id + qty;
+                let purchaseID =  prod.productCode + qty;
             const purchaseurl =  "http://localhost:8080/purchases";
-            var data = JSON.stringify({"id": purchaseID.value,
-                   "product": id.value,
-                   "vendor": vendor.value,
-                   "quantity": qty.value,
-                   "price": tot.value
+            var data = JSON.stringify({"id": purchaseID,
+                   "product": prod.productCode,
+                   "vendor": prod.vendors,
+                   "quantity": qty,
+                   "price": tot
               })
             fetch(purchaseurl,{
             method: 'POST',
