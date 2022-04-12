@@ -172,6 +172,7 @@
                                                         <th>Address</th>
                                                         <th>Opening date</th>
                                                         <th>Store ID</th>
+                                                        <th>Register</th>
                                                     </tr>
                                                 </thead> <tbody>`;
 
@@ -181,12 +182,16 @@
                                                 for (var i = 0; i < data.length; i++) {
                                                 var obj = data[i];
                                                 console.log(data[i]["address"]["address_line1"]);
+                                                var link = "newcustomer.html?"+ obj["location_id"] +"";
                                                     tab +=  `<tr>
                                                 <td>${obj["location_names"][0]["name"]}</td>
                                                 <td>${obj["sub_type_code"]} </td>
                                                 <td>${obj["address"]["address_line1"]}, ${obj["address"]["city"]}, ${obj["address"]["state"]}, ${obj["address"]["postal_code"]}</td>
                                                 <td>${obj["milestones"][0]["milestone_date"]}</td>
                                                 <td>${obj["location_id"]} </td>
+                                                <td>
+                                                    <a href= ${link} class="btn btn-primary btn-user btn-block">Register customer</a>');
+                                                </td>
                                             </tr>`
                                                 }
                                                 tab += `</tbody>`;
