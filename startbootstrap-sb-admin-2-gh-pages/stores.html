@@ -136,13 +136,13 @@
                                                 method: 'GET',
                                                 headers: {
                                                     'X-RapidAPI-Host': 'target-com-store-product-reviews-locations-data.p.rapidapi.com',
-                                                    'X-RapidAPI-Key': '37d8338729mshe90fc8c36341badp1065b3jsnd77468cbf1e1'
+                                                    'X-RapidAPI-Key': '7cb83d654cmsh0f4d7aee14f9aa2p18d1ccjsnd5aa3a6351c6'
                                                 }
                                             };
                                             var zip =  document.getElementById("zip").value;
                                             var radius = document.getElementById("radius").value;
                                             const api_url =
-                                                  'https://target-com-store-product-reviews-locations-data.p.rapidapi.com/location/search?zip='+zip +'&radius='+radius;
+                                                  'https://target-com-store-product-reviews-locations-data.p.rapidapi.com/location/search?zip='+zip+'&radius='+radius+'';
                                             async function getapi(url) {
 
                                                 // Storing response
@@ -190,7 +190,7 @@
                                                 <td>${obj["milestones"][0]["milestone_date"]}</td>
                                                 <td>${obj["location_id"]} </td>
                                                 <td>
-                                                    <a href= ${link} class="btn btn-primary btn-user btn-block">Register customer</a>');
+                                                    <a href= ${link} class="btn btn-primary btn-user btn-block">Register customer</a>
                                                 </td>
                                             </tr>`
                                                 }

@@ -121,7 +121,7 @@
                                             </div>
                                             <script>
 var id = window.location.href;
-id = id.replace("file:///C:/Users/Diehl/Downloads/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/newcustomer.html?","");
+id= id.split('?')[1];
 document.write("Store ID: " + id + "");
 </script>
                                             <hr>
@@ -160,7 +160,7 @@ document.write("Store ID: " + id + "");
             name += document.querySelector('#LName');
             let email = document.querySelector('#email');
             let storeid = window.location.href;
-            storeid = storeid.replace("file:///C:/Users/Diehl/Downloads/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/newcustomer.html?","");
+            storeid = storeid.split('?')[1];
 
             // Creating a XHR object
             let xhr = new XMLHttpRequest();
