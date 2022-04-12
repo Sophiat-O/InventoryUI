@@ -170,7 +170,6 @@
                                                 for (var i = 0; i < data.length; i++) {
                                                 var obj = data[i];
                                                 console.log(data[i].id);
-                                                var link = "newsale.html?"+ obj.id +"";
                                                     tab +=  `<tr>
                                                 <td>${obj.id}</td>
                                                 <td>${obj.product}</td>
@@ -178,7 +177,6 @@
                                                 <td>${obj.quantity} </td>
                                                 <td>${obj.creationDate} </td>
                                                 <td>${obj.price} </td>
-                                                <td><a href= ${link} class="btn btn-primary btn-user">Make new sale</a></td>
                                             </tr>`
                                                 }
                                                 tab += `</tbody>`;
@@ -242,22 +240,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <!--<script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
-
-    <!-- Core plugin JavaScript-->
-    <!--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
-
-    <!-- Custom scripts for all pages-->
-    <!--<script src="js/sb-admin-2.min.js"></script>-->
-
-    <!-- Page level plugins -->
-    <!--<script src="vendor/datatables/jquery.dataTables.min.js"></script>-->
-    <!--<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
-
-    <!-- Page level custom scripts -->
-    <!--<script src="js/demo/datatables-demo.js"></script>-->
     <body onload="start()">
     </body>
 </body>

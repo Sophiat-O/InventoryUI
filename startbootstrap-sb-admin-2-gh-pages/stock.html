@@ -107,7 +107,7 @@
         <div id="content">
 
             <!-- Begin Page Content -->
-           s <div class="container-fluid">
+            <div class="container-fluid">
 
                 <!-- Page Heading -->
                 </br>
@@ -169,6 +169,7 @@
                                                         <th>Creation date</th>
                                                         <th>Vendors</th>
                                                         <th>Restock</th>
+                                                        <th>Delete</th>
                                                     </tr>
                                                 </thead> <tbody>`;
 
@@ -190,8 +191,11 @@
                                                                placeholder="Enter quantity">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <button onclick="myFunction(${obj.price})" class="btn btn-primary btn-user">Purchase</button>
+                                                        <button onclick="restock(${obj.price})" class="btn btn-primary btn-user">Purchase</button>
                                                     </div> </div></td>
+                                                    <td>
+                                                        <button onclick="deleteprd()" class="btn btn-primary btn-user">Delete product</button>
+                                                    </td>
                                             </tr>`
                                                 }
                                                 tab += `</tbody>`;
@@ -208,7 +212,7 @@
 
                 </div>
                 <!-- /.container-fluid -->
-            <script>function myFunction(price) {
+            <script>function restock(price) {
             var txt;
             var qty = document.getElementById("qty").value;
             var tot = qty*price
@@ -217,7 +221,15 @@
             } else {
             txt = "You pressed Cancel!";
             }
-            }</script>
+            }
+            function deleteprd() {
+            if (confirm("Confirm product deletion?")) {
+            txt = "You pressed OK!";
+            } else {
+            txt = "You pressed Cancel!";
+            }
+            }
+            </script>
             </div>
             <!-- End of Main Content -->
 
