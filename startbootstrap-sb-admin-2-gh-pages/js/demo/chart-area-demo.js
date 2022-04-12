@@ -30,41 +30,36 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 const monthLabel = [];
 const monthValue = [];
 
-    const options = {
-        method: 'GET'
-    };
-    const api_url = 'http://localhost:8080/monthlysale';
+    Promise.all([
+                fetch('http://localhost:8080/monthlysale')
+            ]).then(function (responses) {
+                // Get a JSON object from each of the responses
+                return Promise.all(responses.map(function (response) {
+                    return response.json();
+                }));
+            }).then(function (data) {
+                // Log the data to the console
+                // Add the data to the monthLabel and monthValue list
+                for (var i = 0; i < data.length; i++) {
+                            var obj = data[i]
+                            for(var j = 0; j < obj.length; j++ ){
+                            var dataObj = obj[j];
+                            let monthName = dataObj.month;
+                            monthLabel.push(monthName);
+                            monthValue.push(dataObj.total);
+                             //console.log(obj.month);
 
-    async function getapi(url) {
-        // Storing response
-        const response = await fetch(url, options);
+                        }
 
-        // Storing data in form of JSON
-        var data = await response.json();
-        console.log("data");
-        //if (response) {
-            //hideloader();
-        //}
-
-        show(data);
-    }
-    // Calling that async function
-    getapi(api_url);
-    // Function to define innerHTML for HTML div
-    function show(data) {
+                    }
+                        console.log(monthLabel)
+            }).catch(function (error) {
+                // if there's an error, log it
+                console.log(error);
+            });
 
 
-        for (var i = 0; i < data.length; i++) {
 
-            var obj = data[i];
-            let monthName = obj.month;
-            monthLabel.push(monthName);
-            monthValue.push(obj.total);
-             //console.log(obj.month);
-
-        }
-        console.log(monthLabel)
-    }
 
 // Area Chart Example
 
