@@ -126,8 +126,9 @@
                                             </div>
                                             <script>
                                                 var id = window.location.href;
-                                                id = id.replace("/Users/sophie/InventoryUI/startbootstrap-sb-admin-2-gh-pages/newsale.html?","");
-                                                document.write("Customer ID: " + id + "");
+                                                const info = id.split('?');
+                                                
+                                                document.write("Customer ID: " + info[1] + "");
                                             </script>
                                             <div class="card shadow mb-4">
                                                 <div class="card-header py-3">
