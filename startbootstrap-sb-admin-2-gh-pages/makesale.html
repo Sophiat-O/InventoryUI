@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Register customer</title>
+    <title>Make sale</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -117,12 +117,19 @@
                                     <div class="center">
                                         <div class="p-5">
                                             <div class="text-center">
-                                                <h1 class="h4 text-gray-900 mb-4">Make a new purchase</h1>
+                                                <h1 class="h4 text-gray-900 mb-4">Make a new sale</h1>
                                             </div>
-                                            Product code: <span id="id"></span>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    Customer ID: <span id="customerID"></span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    Product code: <span id="productCode"></span>
+                                                </div>
+                                            </div>
                                             <hr>
                                             <form class="user" action="purchase.html">
-                                                <p class="mb-4">Purchase information:</p>
+                                                <p class="mb-4">Sale information:</p>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                                         Product name: <span id="name"></span>
@@ -149,8 +156,8 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="text" class="form-control form-control-user" id="purchase"
-                                                               placeholder="Purchase ID">
+                                                        <input type="text" class="form-control form-control-user" id="sale"
+                                                               placeholder="Sale ID">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <input type="number" step="any" class="form-control form-control-user" id="quantity"
@@ -172,9 +179,10 @@
         </div>
     </div>
     <script>
-                var id = window.location.href;
+        var id = window.location.href;
         const info = id.split('?');
-        document.getElementById("id").innerHTML = info[1]; 
+        document.getElementById("customerID").innerHTML = info[1]; 
+        document.getElementById("productCode").innerHTML = info[2]; 
         
         const options = {
                                                         method: 'GET'
@@ -210,7 +218,7 @@
         let name = document.getElementById("name");
         let category = document.getElementById("category");
         let price = document.getElementById("price");
-        let fquantity = document.getElementById("qty").value + document.getElementById("quantity").value;
+        let fquantity = document.getElementById("qty").value - document.getElementById("quantity").value;
         let creationDate = document.getElementById("creationDate");
         let vendors = document.getElementById("vendor");
 
@@ -237,18 +245,21 @@
               res => {console.log(data)}
         )
 
-            let id = document.getElementById("purchase");
+            let id = document.getElementById("sale");
             let product = document.getElementById("productCode");
-            let vendor = document.getElementById("vendor");
-            let purchaseQuantity = document.getElementById("quantity").value;
-            let purchasePrice = document.getElementById("price").value * purchaseQuantity;
+            let customer = document.getElementById("customerID");
+            let saleQuantity = document.getElementById("quantity").value;
+            let purchasePrice = document.getElementById("price").value * saleQuantity;
+            var today = new Date();
+            var saleDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
 
-            const purchaseurl =  "http://localhost:8080/purchases";
+            const purchaseurl =  "http://localhost:8080/sales";
             var data = JSON.stringify({"id": id.value,
                    "product": product.value,
-                   "vendor": vendor.value,
+                   "customer": customer.value,
                    "quantity": purchaseQuantity,
+                   "creationDate": saleDate,
                    "price": purchasePrice
               })
             fetch(purchaseurl,{

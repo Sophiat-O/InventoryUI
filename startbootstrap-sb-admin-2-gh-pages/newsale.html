@@ -189,17 +189,17 @@
                                                  console.log(data.length);
                                                         for (var i = 0; i < data.length; i++) {
                                                         var obj = data[i];
+                                                        var customerID = window.location.href;
+                                                        customerID = id.replace("/Users/sophie/InventoryUI/startbootstrap-sb-admin-2-gh-pages/newsale.html?","");
+                                                        var link = "makesale.html?"+ customerID + "?" + obj.productCode +"";
                                                         console.log(data[i].name);
                                                             tab +=  `<tr>
                                                         <td>${obj.name}</td>
                                                         <td>${obj.quantity}</td>
                                                         <td>${obj.price}</td>
-                                                        <td><div class="form-group row"><div class="col-sm-6 mb-3 mb-sm-0">
-                                                                <input type="text" class="form-control form-control-user" id="qty"
-                                                                       placeholder="Enter quantity">
-                                                            </div>
+                                                        <td><div class="form-group row">
                                                             <div class="col-sm-6">
-                                                               <button onclick="myFunction(${obj.price})" class="btn btn-primary btn-user">Place sale</button>
+                                                               <a href= ${link} class="btn btn-primary btn-user">Place sale</button>
                                                             </div> </div></td>
 
                                                     </tr>`
@@ -217,20 +217,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <script>
-function myFunction(price) {
-  var txt;
-  var qty = document.getElementById("qty").value;
-  var tot = qty*price
-  if (confirm("Total is" + tot + " Confirm order?")) {
-    txt = "You pressed OK!";
-  } else {
-    txt = "You pressed Cancel!";
-  }
-}
-</script>
-
                                             </form>
                                             <hr>
                                         </div>
