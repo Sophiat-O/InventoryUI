@@ -119,46 +119,57 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">Make a new purchase</h1>
                                             </div>
-                                            Product code: <span id="id"></span>
-                                            <hr>
-                                            <form class="user" action="purchase.html">
-                                                <p class="mb-4">Purchase information:</p>
-                                                <div class="form-group row">
-                                                    <input type="text" class="form-control form-control-user" id="name"
-                                                               disabled>
-                                                    <div class="col-sm-6">
-                                                        Product category: <span id="category"></span>
+                                                <form class="user" action="purchase.html">
+                                                    <p class="mb-4">Purchase information:</p>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                                            Product code: <input type="text" class="form-control form-control-user" id="id"
+                                                            disabled>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            Product name: <input type="text" step="any" class="form-control form-control-user" id="name"
+                                                            disabled>
+                                                        </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                                            Product category: <input type="text" class="form-control form-control-user" id="category"
+                                                            disabled>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            Vendor ID: <input type="number" step="any" class="form-control form-control-user" id="vendor"
+                                                            disabled>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        Vendor ID: <span id="vendor"></span>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                                            Current quantity: <input type="number" class="form-control form-control-user" id="qty"
+                                                            disabled>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            Creation date: <input type="text" step="any" class="form-control form-control-user" id="creationDate"
+                                                            disabled>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        Current quantity: <span id="qty"></span>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            Unit price: <input type="number" step="any" class="form-control form-control-user" id="price"
+                                                            disabled>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        Creation date: <span id="creationDate"></span>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                                            <input type="text" class="form-control form-control-user" id="purchase"
+                                                                   placeholder="Purchase ID">
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="any" class="form-control form-control-user" id="quantity"
+                                                                   placeholder="Quantity">
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        Unit price: <span id="price"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="text" class="form-control form-control-user" id="purchase"
-                                                               placeholder="Purchase ID">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <input type="number" step="any" class="form-control form-control-user" id="quantity"
-                                                               placeholder="Quantity">
-                                                    </div>
-                                                </div>
-                                                <button onclick="sendJSON()" class="btn btn-primary btn-user btn-block">
-                                                    Add purchase
-                                                </button>
+                                                    <button onclick="sendJSON()" class="btn btn-primary btn-user btn-block">
+                                                        Add purchase
+                                                    </button>
+                                                </form>
                                             </form>
                                             <hr>
                                         </div>
@@ -171,38 +182,45 @@
         </div>
     </div>
     <script>
-                var id = window.location.href;
-        const info = id.split('?');
-        document.getElementById("id").innerHTML = info[1]; 
+    function productJSON(){
+        //var id = window.location.href;
+        //const info = id.split('?');
+        //document.getElementById("id").innerHTML = info[1];
+        var id = document.getElementById("id").value;
         
         const options = {
-                                                        method: 'GET'
-                                                    };
-                                                    const api_url =
-                                                          'http://localhost:8080/products'+ id + "";
-                                                          //const response = await fetch(url, options);
-        
-                                                        // Storing data in form of JSON
-                                                        //var data = await response.json();
-                                                        var data = {"productCode": 20,
-                           "name": "hisname",
-                           "quantity": 50,
-                           "category": "category.value",
-                           "price": 10,
-                           "creationDate": "creationDate.value",
-                           "vendors": "somevendor"
-                      }
-                                                        console.log(data);
-                                                        document.getElementById("price").innerHTML = data.price; 
-                                                        document.getElementById("vendor").innerHTML = data.vendors; 
-                                                        document.getElementById("qty").innerHTML = data.quantity; 
-                                                        document.getElementById("name").innerHTML = data.name; 
-                                                        document.getElementById("name").setAttribute('value',data.name);
-                                                        document.getElementById("category").innerHTML = data.category; 
-                                                        document.getElementById("creationDate").innerHTML = data.creationDate; 
-        
+                            method: 'GET'
+                        };
+                        const api_url =
+                              'http://localhost:8080/products/'+ id;
+
+                            async function getapi(url) {
+                                // Storing response
+                                const response = await fetch(url, options,{
+                                mode:'no-cors'
+                                });
+
+                                // Storing data in form of JSON
+                                var data = await response.json();
+
+                                show(data);
+                            }
+                            // Calling that async function
+                            getapi(api_url);
+
+                            function show(data) {
+
+                                console.log(data);
+                                document.getElementById("price").setAttribute('value',data.price);
+                                document.getElementById("vendor").setAttribute('value',data.vendors);
+                                document.getElementById("qty").setAttribute('value',data.quantity);
+                                document.getElementById("name").setAttribute('value',data.name);
+                                document.getElementById("category").setAttribute('value',data.category);
+                                document.getElementById("creationDate").setAttribute('value',data.creationDate);
+                            }
+
                                                         
-        
+        }
         </script>
         
     <script>function sendJSON(){
@@ -217,9 +235,9 @@
         const url =  "http://localhost:8080/products" + productCode + "";
         var data = JSON.stringify({"productCode": productCode.value,
                "name": name.value,
-               "quantity": fquantity,
                "category": category.value,
                "price": price.value,
+               "quantity": fquantity.value,
                "creationDate": creationDate.value,
                "vendors": vendors.value
           })
