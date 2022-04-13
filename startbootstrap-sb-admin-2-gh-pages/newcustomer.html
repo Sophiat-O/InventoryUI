@@ -123,7 +123,8 @@
                                             <script>
             var id = window.location.href;
             const info = id.split('?');
-            document.getElementById("storeID").innerHTML = info[1]; 
+            document.getElementById("storeID").setAttribute('value',info[1])
+            //document.getElementById("storeID").innerHTML = info[1];
 </script>
                                             <hr>
                                             <form class="user">
@@ -153,6 +154,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <script>function sendJSON(){
 
             let result = document.querySelector('.result');
@@ -189,6 +194,7 @@
             xhr.send(data);
         }
 </script>
+
 
 </body>
 
