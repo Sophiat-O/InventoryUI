@@ -123,11 +123,11 @@
                                             <script>
             var id = window.location.href;
             const info = id.split('?');
-            document.getElementById("storeID").setAttribute('value',info[1])
-            //document.getElementById("storeID").innerHTML = info[1];
+            //document.getElementById("storeID").setAttribute('value',info[1])
+            document.getElementById("storeID").innerHTML = info[1];
 </script>
                                             <hr>
-                                            <form class="user">
+                                            <form class="user" action="customers.html">
                                                 <p class="mb-4">Contact person information:</p>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -143,7 +143,11 @@
                                                     <input type="email" class="form-control form-control-user" id="email"
                                                            placeholder="Email Address">
                                                 </div>
-                                                <button onclick="sendJSON()" href="stores.html" class="btn btn-primary btn-user btn-block">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control form-control-user" id="creationDate"
+                                                           placeholder="Creation Date">
+                                                </div>
+                                                <button onclick="sendJSON()"  class="btn btn-primary btn-user btn-block">
                                                     Register customer
                                                 </button>
                                             </form>
@@ -161,11 +165,15 @@
 <script>function sendJSON(){
 
             let result = document.querySelector('.result');
-            let name = document.querySelector('#FName');
+            let name = document.querySelector('#FName').value;
             name += " ";
-            name += document.querySelector('#LName');
+            name += document.querySelector('#LName').value;
             let email = document.querySelector('#email');
-            let storeid = document.getElementById("storeID");
+            let creationDate = document.querySelector('#creationDate');
+            var id = window.location.href;
+            const info = id.split('?');
+            let storeid = info[1]
+            //let storeid = document.getElementById("storeID");
 
             // Creating a XHR object
             let xhr = new XMLHttpRequest();
@@ -188,7 +196,7 @@
             };
 
             // Converting JSON data to string
-            var data = JSON.stringify({"id": storeid.value, "name": name.value, "email": email.value });
+            var data = JSON.stringify({"id": storeid, "name": name, "email": email.value, "creationDate":creationDate.value });
 
             // Sending data with the request
             xhr.send(data);
